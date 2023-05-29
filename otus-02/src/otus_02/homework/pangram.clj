@@ -1,15 +1,12 @@
 (ns otus-02.homework.pangram
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as str]))
 
 
-(def alphabet
-  (->> (range (int \a) (inc (int \z)))
-       (map char)
-       (set)))
+(def alphabet #{\a \b \c \d \e \f \g \h \i \j \k \l \m \n \o \p \q \r \s \t \u \v \w \x \y \z})
 
 
 (defn is-pangram [test-string]
-  (let [clean-string (-> test-string
-                         (string/lower-case)
-                         (string/replace #"[^a-z]" ""))]
-    (= alphabet (set clean-string))))
+  (let [lower-str     (str/lower-case test-string)
+        lower-str-seq (seq (str/replace lower-str #"[^a-z]" ""))]
+    (= alphabet (apply sorted-set lower-str-seq))))
+
